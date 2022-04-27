@@ -1,18 +1,59 @@
-import { createElement, useMemo } from "react";
+import { useCreation, useHover, useUnmount } from "ahooks";
+import { createElement, useEffect, useRef, useState } from "react";
+import Unity, { UnityContext } from "react-unity-webgl";
 import { UnityContainerProps } from "../typings/UnityProps";
-import { ValueStatus } from "mendix";
 
 export default function (props: UnityContainerProps) {
-    console.log(eval("{a:1}"));
-    const value = useMemo(() => {
-        if (props.attribute && props.attribute.status === ValueStatus.Available) {
-            return props.attribute.value;
+    const unityContext = useCreation(
+        () =>
+            new UnityContext({
+                loaderUrl: `${props.unityModelPath}.loader.js`,
+                dataUrl: `${props.unityModelPath}.data`,
+                frameworkUrl: `${props.unityModelPath}.framework.js`,
+                codeUrl: `${props.unityModelPath}.wasm`
+            }),
+        [props.unityModelPath]
+    );
+
+    const ref = useRef<any>();
+    const isHovering = useHover(ref);
+
+    useEffect(() => {
+        if (props.hoverGameObject) {
+            unityContext.send(props.hoverGameObject, props.hoverMethod, isHovering ? 1 : 0);
         }
-    }, [props.attribute]);
+    }, [isHovering]);
+
+    const [first, setFirst] = useState(true);
+
+    useEffect(() => {
+        if (!unityContext) {
+            return;
+        }
+        (window as any).unityContext = (window as any).unityContext ? (window as any).unityContext : {};
+        (window as any).unityContext[props.name] = unityContext;
+
+        if (first && props.onReady && props.onReady.canExecute) {
+            props.onReady.execute();
+            setFirst(false);
+        }
+
+        return () => {
+        };
+    }, [unityContext, props.onReady]);
+
+    useUnmount(() => {
+        unityContext.removeAllEventListeners();
+    })
 
     return (
-        <div>
-            hello {props.sampleText} and your value is {value}
+        <div ref={ref}>
+            <Unity
+                className={props.class}
+                tabIndex={props.tabIndex}
+                style={props.style}
+                unityContext={unityContext}
+            />
         </div>
     );
 }

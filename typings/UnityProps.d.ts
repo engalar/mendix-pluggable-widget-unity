@@ -4,17 +4,17 @@
  * @author Mendix UI Content Team
  */
 import { CSSProperties } from "react";
-import { EditableValue, ListValue, ListAttributeValue } from "mendix";
+import { ActionValue } from "mendix";
 
 export interface UnityContainerProps {
     name: string;
     class: string;
     style?: CSSProperties;
     tabIndex?: number;
-    sampleText: string;
-    attribute?: EditableValue<string>;
-    datasource: ListValue;
-    att2?: ListAttributeValue<string>;
+    unityModelPath: string;
+    onReady?: ActionValue;
+    hoverGameObject: string;
+    hoverMethod: string;
 }
 
 export interface UnityPreviewProps {
@@ -22,8 +22,8 @@ export interface UnityPreviewProps {
     style: string;
     styleObject?: CSSProperties;
     readOnly: boolean;
-    sampleText: string;
-    attribute: string;
-    datasource: {} | { type: string } | null;
-    att2: string;
+    unityModelPath: string;
+    onReady: {} | null;
+    hoverGameObject: string;
+    hoverMethod: string;
 }
