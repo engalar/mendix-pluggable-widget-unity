@@ -1,4 +1,4 @@
-import { useCreation, useHover, useUnmount } from "ahooks";
+import { useCreation, useHover, useSize, useUnmount } from "ahooks";
 import { createElement, useEffect, useRef, useState } from "react";
 import Unity, { UnityContext } from "react-unity-webgl";
 import { UnityContainerProps } from "../typings/UnityProps";
@@ -16,6 +16,7 @@ export default function (props: UnityContainerProps) {
     );
 
     const ref = useRef<any>();
+    const size = useSize(ref);
     const isHovering = useHover(ref);
 
     useEffect(() => {
@@ -41,18 +42,37 @@ export default function (props: UnityContainerProps) {
         return () => {
         };
     }, [unityContext, props.onReady]);
+    const [canvas, setCanvas] = useState<HTMLCanvasElement>();
+    useEffect(() => {
+        if (!canvas) {
+            return;
+        }
+        if (size.height)
+            canvas.height = size.height;
+        if (size.width)
+            canvas.width = size.width;
+    }, [size, canvas]);
+
+    useEffect(function () {
+        unityContext.on("canvas", function (canvas) {
+            canvas.width = 100;
+            canvas.height = 50;
+            setCanvas(canvas);
+        });
+    }, []);
 
     useUnmount(() => {
         unityContext.removeAllEventListeners();
-    })
+    });
 
     return (
-        <div ref={ref}>
+        <div
+            style={props.style}
+            tabIndex={props.tabIndex}
+            className={props.class} ref={ref}>
             <Unity
-                className={props.class}
-                tabIndex={props.tabIndex}
-                style={props.style}
                 unityContext={unityContext}
+                matchWebGLToCanvasSize
             />
         </div>
     );

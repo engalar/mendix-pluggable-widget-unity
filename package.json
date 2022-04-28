@@ -1,7 +1,7 @@
 {
   "name": "unity",
   "widgetName": "Unity",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "description": "My widget description",
   "packagePath": "mendixcn",
   "author": "wengao.liu@siemens.com",
@@ -11,7 +11,7 @@
     "react-unity-webgl": "^8.8.0"
   },
   "scripts": {
-    "serve": "http-server public/unity3d/Build -g -p 5000 --cors",
+    "serve": "http-server public -g -p 5000 --cors",
     "m": "npm install -g cnpm rollup prettier eslint --registry=https://registry.npmmirror.com",
     "x": "npm i --registry=https://registry.npmmirror.com",
     "testProject": "cmd /c git clone https://gitee.com/engalar/mendix-testproject-960.git --depth=1 ./tests/testProject && rd /s /q  .\\tests\\testProject\\.git",
@@ -39,9 +39,8 @@
   },
   "license": "Apache-2.0",
   "devDependencies": {
-    "@mendix/pluggable-widgets-tools": "^9.11.1",
+    "@mendix/pluggable-widgets-tools": ">=8.9.2",
     "@types/big.js": "^6.0.2",
-    "@types/classnames": "^2.2.4",
     "@types/lodash-es": "^4.17.5",
     "@types/react": "~17.0.1",
     "@types/react-dom": "~17.0.1",
