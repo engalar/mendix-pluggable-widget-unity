@@ -33,7 +33,6 @@ jobs:
               uses: codex-team/action-nodejs-package-info@v1
             - name: Install Dependencies
               run: |
-                  npm run m
                   npm ci
                   npm run build
             - name: "Zip testProject"
