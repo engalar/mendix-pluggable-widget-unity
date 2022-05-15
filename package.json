@@ -12,7 +12,7 @@
   },
   "scripts": {
     "serve": "http-server public -g -p 5000 --cors",
-    "testProject": "cmd /c git clone https://gitee.com/engalar/mendix-testproject-960.git --depth=1 ./tests/testProject && shx rm -rf .\\tests\\testProject\\.git",
+    "testProject": "git clone https://gitee.com/engalar/mendix-testproject-960.git --depth=1 ./tests/testProject && shx rm -rf .\\tests\\testProject\\.git",
     "r": "node ./script/rename.js",
     "u": "node ./script/update.js",
     "start": "pluggable-widgets-tools start:web",
