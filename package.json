@@ -1,7 +1,7 @@
 {
   "name": "unity",
   "widgetName": "Unity",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "description": "My widget description",
   "packagePath": "mendixcn",
   "author": "wengao.liu@siemens.com",

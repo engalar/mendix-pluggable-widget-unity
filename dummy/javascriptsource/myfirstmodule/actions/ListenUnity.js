@@ -5,6 +5,7 @@
 // - the code between BEGIN USER CODE and END USER CODE
 // - the code between BEGIN EXTRA CODE and END EXTRA CODE
 // Other code you write will be lost the next time you deploy the project.
+import "mx-global";
 import { Big } from "big.js";
 
 // BEGIN EXTRA CODE
@@ -21,7 +22,7 @@ export async function ListenUnity(unityWidgetName, eventName, onEventHandler, he
 	// BEGIN USER CODE
 	const instance = unityContext[unityWidgetName];
 	console.log('listen ' + eventName + '@'+unityWidgetName);
-	instance.on(eventName, msg => {
+	instance.addEventListener(eventName, msg => {
 		onEventHandler({Msg: msg, Entity: helpContext});
 	});
 	// END USER CODE
